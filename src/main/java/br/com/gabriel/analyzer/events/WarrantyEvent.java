@@ -1,10 +1,10 @@
 package br.com.gabriel.analyzer.events;
 
 public record WarrantyEvent(
-  Event event,
+  EventMetadata event,
   String proposalId,
   String id,
   Double value,
   String warrantyProvince
-) {
+) implements Event {
 }
