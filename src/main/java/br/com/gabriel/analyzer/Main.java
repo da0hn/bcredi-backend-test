@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public class Main {
+
   public static void main(String[] args) throws Exception {
     System.out.println("Starting tests...");
 
