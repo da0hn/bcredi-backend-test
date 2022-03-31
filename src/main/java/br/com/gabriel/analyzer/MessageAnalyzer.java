@@ -1,6 +1,8 @@
 package br.com.gabriel.analyzer;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.StreamSupport;
 
 public class MessageAnalyzer {
   // Essa função recebe uma lista de mensagens, por exemplo:
@@ -14,7 +16,16 @@ public class MessageAnalyzer {
   //
   // Complete a função para retornar uma String com os IDs das propostas válidas no seguinte formato (separado por vírgula):
   // "52f0b3f2-f838-4ce2-96ee-9876dd2c0cf6,51a41350-d105-4423-a9cf-5a24ac46ae84,50cedd7f-44fd-4651-a4ec-f55c742e3477"
-  public static String execute(List<String> messages) {
+  public String execute(List<String> messages) {
+
+    var messageStream = messages.stream()
+      .flatMap(message -> Arrays.stream(message.split(",")));
+
+    var events = StreamSupport.stream(
+      new EventSpliterator(messageStream),
+      false
+    ).toList();
+
     return "";
   }
 }

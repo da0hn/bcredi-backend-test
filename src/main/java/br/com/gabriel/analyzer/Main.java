@@ -42,6 +42,8 @@ public class Main {
       "./data/output/output012.txt"
     };
 
+    var analyzer = new MessageAnalyzer();
+
     for(int i = 0; i <= outputFiles.length - 1; ++i) {
       Path inputPath = Paths.get(inputFiles[i]);
       Path outputPath = Paths.get(outputFiles[i]);
@@ -49,7 +51,7 @@ public class Main {
       List<String> inputLines = Files.readAllLines(inputPath);
       List<String> outputLines = Files.readAllLines(outputPath);
 
-      if(MessageAnalyzer.execute(inputLines).equals(outputLines.get(0))) {
+      if(analyzer.execute(inputLines).equals(outputLines.get(0))) {
         System.out.printf("Test %s/%s - Passed ✔%n", i + 1, outputFiles.length);
       }
       else {
