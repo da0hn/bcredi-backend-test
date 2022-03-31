@@ -14,6 +14,7 @@ import static br.com.gabriel.analyzer.events.EventAction.REMOVED;
 
 public class EventSpliterator implements Spliterator<Event> {
 
+  private static final long FIELD_NUMBER = 10;
   private final Spliterator<String> data;
 
 
@@ -25,7 +26,7 @@ public class EventSpliterator implements Spliterator<Event> {
 
     var eventBuilder = EventMetadataBuilder.anEventMetadata();
 
-    var isEventParsed = map(
+    var isEventParsed = SpliteratorActionApplier.apply(
       this.data,
       eventBuilder::withId,
       eventBuilder::withSchema,
@@ -41,7 +42,7 @@ public class EventSpliterator implements Spliterator<Event> {
 
         proponentBuilder.withEvent(eventBuilder.build());
 
-        var isProponentParsed = map(
+        var isProponentParsed = SpliteratorActionApplier.apply(
           this.data,
           proponentBuilder::withProposalId,
           proponentBuilder::withId,
@@ -62,7 +63,7 @@ public class EventSpliterator implements Spliterator<Event> {
 
         proposalBuilder.withEvent(eventBuilder.build());
 
-        var isProposalParsed = map(
+        var isProposalParsed = SpliteratorActionApplier.apply(
           this.data,
           proposalBuilder::withId,
           proposalBuilder::withLoanValue,
@@ -81,14 +82,14 @@ public class EventSpliterator implements Spliterator<Event> {
         var warrantyBuilder = WarrantyEventBuilder.aWarrantyEvent();
         warrantyBuilder.withEvent(eventBuilder.build());
 
-        var isWarrantyParsed = map(
+        var isWarrantyParsed = SpliteratorActionApplier.apply(
           this.data,
           warrantyBuilder::withProposalId,
           warrantyBuilder::withId
         );
 
         if(isWarrantyParsed && eventBuilder.action() != REMOVED) {
-          isWarrantyParsed = map(
+          isWarrantyParsed = SpliteratorActionApplier.apply(
             this.data,
             warrantyBuilder::withValue,
             warrantyBuilder::withWarrantyProvince
@@ -103,14 +104,6 @@ public class EventSpliterator implements Spliterator<Event> {
         yield false;
       }
     };
-  }
-
-  @SafeVarargs private boolean map(Spliterator<String> data, Consumer<String>... actions) {
-    for(var action : actions) {
-      boolean isAdvanced = data.tryAdvance(action);
-      if(!isAdvanced) return false;
-    }
-    return true;
   }
 
   @Override public Spliterator<Event> trySplit() {
