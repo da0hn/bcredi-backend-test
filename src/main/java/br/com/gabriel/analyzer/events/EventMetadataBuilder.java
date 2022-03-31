@@ -8,7 +8,7 @@ public final class EventMetadataBuilder {
   private static final String FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'";
   private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(FORMAT);
   private String id;
-  private String schema;
+  private EventSchema schema;
   private EventAction action;
   private LocalDateTime timestamp;
 
@@ -24,9 +24,8 @@ public final class EventMetadataBuilder {
   }
 
   public void withSchema(String schema) {
-    this.schema = schema;
+    this.schema = EventSchema.valueOf(schema.toUpperCase(Locale.ROOT));
   }
-
 
   public void withAction(String action) {
     this.action = EventAction.valueOf(action.toUpperCase(Locale.ROOT));
@@ -36,7 +35,7 @@ public final class EventMetadataBuilder {
     this.timestamp = LocalDateTime.parse(timestamp, formatter);
   }
 
-  public String schema() {
+  public EventSchema schema() {
     return this.schema;
   }
 

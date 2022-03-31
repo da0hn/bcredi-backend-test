@@ -14,7 +14,6 @@ import static br.com.gabriel.analyzer.events.EventAction.REMOVED;
 
 public class EventSpliterator implements Spliterator<Event> {
 
-  private static final long FIELD_NUMBER = 10;
   private final Spliterator<String> data;
 
 
@@ -37,7 +36,7 @@ public class EventSpliterator implements Spliterator<Event> {
     if(!isEventParsed) return false;
 
     return switch(eventBuilder.schema()) {
-      case "proponent" -> {
+      case PROPONENT -> {
         var proponentBuilder = ProponentEventBuilder.aProponentEvent();
 
         proponentBuilder.withEvent(eventBuilder.build());
@@ -58,7 +57,7 @@ public class EventSpliterator implements Spliterator<Event> {
         }
         yield false;
       }
-      case "proposal" -> {
+      case PROPOSAL -> {
         var proposalBuilder = ProposalEventBuilder.aProposalEvent();
 
         proposalBuilder.withEvent(eventBuilder.build());
@@ -77,7 +76,7 @@ public class EventSpliterator implements Spliterator<Event> {
 
         yield false;
       }
-      case "warranty" -> {
+      case WARRANTY -> {
 
         var warrantyBuilder = WarrantyEventBuilder.aWarrantyEvent();
         warrantyBuilder.withEvent(eventBuilder.build());
@@ -103,7 +102,6 @@ public class EventSpliterator implements Spliterator<Event> {
 
         yield false;
       }
-      default -> throw new IllegalStateException(String.format("Schema %s not recognized", eventBuilder.schema()));
     };
   }
 

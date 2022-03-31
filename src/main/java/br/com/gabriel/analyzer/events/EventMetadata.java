@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public record EventMetadata(
   String id,
-  String schema,
+  EventSchema schema,
   EventAction action,
   LocalDateTime timestamp
 ) {
