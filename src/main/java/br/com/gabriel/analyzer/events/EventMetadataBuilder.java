@@ -43,4 +43,8 @@ public final class EventMetadataBuilder {
   public EventMetadata build() {
     return new EventMetadata(id, schema, action, timestamp);
   }
+
+  public EventAction action() {
+    return this.action;
+  }
 }

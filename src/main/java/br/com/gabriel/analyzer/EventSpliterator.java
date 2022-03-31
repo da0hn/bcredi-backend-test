@@ -10,6 +10,8 @@ import java.util.Spliterator;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
+import static br.com.gabriel.analyzer.events.EventAction.REMOVED;
+
 public class EventSpliterator implements Spliterator<Event> {
 
   private static final long FIELD_NUMBER = 10;
@@ -25,6 +27,7 @@ public class EventSpliterator implements Spliterator<Event> {
     var eventBuilder = EventMetadataBuilder.anEventMetadata();
 
     var isEventParsed = map(
+      this.data,
       eventBuilder::withId,
       eventBuilder::withSchema,
       eventBuilder::withAction,
@@ -40,6 +43,7 @@ public class EventSpliterator implements Spliterator<Event> {
         proponentBuilder.withEvent(eventBuilder.build());
 
         var isProponentParsed = map(
+          this.data,
           proponentBuilder::withProposalId,
           proponentBuilder::withId,
           proponentBuilder::withName,
@@ -60,6 +64,7 @@ public class EventSpliterator implements Spliterator<Event> {
         proposalBuilder.withEvent(eventBuilder.build());
 
         var isProposalParsed = map(
+          this.data,
           proposalBuilder::withId,
           proposalBuilder::withLoanValue,
           proposalBuilder::withNumberOfMonthlyInstallments
@@ -78,11 +83,18 @@ public class EventSpliterator implements Spliterator<Event> {
         warrantyBuilder.withEvent(eventBuilder.build());
 
         var isWarrantyParsed = map(
+          this.data,
           warrantyBuilder::withProposalId,
-          warrantyBuilder::withId,
-          warrantyBuilder::withValue,
-          warrantyBuilder::withWarrantyProvince
+          warrantyBuilder::withId
         );
+
+        if(isWarrantyParsed && eventBuilder.action() != REMOVED) {
+          isWarrantyParsed = map(
+            this.data,
+            warrantyBuilder::withValue,
+            warrantyBuilder::withWarrantyProvince
+          );
+        }
 
         if(isWarrantyParsed) {
           action.accept(warrantyBuilder.build());
@@ -95,9 +107,9 @@ public class EventSpliterator implements Spliterator<Event> {
     };
   }
 
-  @SafeVarargs private boolean map(Consumer<String>... actions) {
+  @SafeVarargs private boolean map(Spliterator<String> data, Consumer<String>... actions) {
     for(var action : actions) {
-      boolean isAdvanced = this.data.tryAdvance(action);
+      boolean isAdvanced = data.tryAdvance(action);
       if(!isAdvanced) return false;
     }
     return true;
@@ -108,7 +120,7 @@ public class EventSpliterator implements Spliterator<Event> {
   }
 
   @Override public long estimateSize() {
-    return this.data.estimateSize() / FIELD_NUMBER;
+    return this.data.estimateSize();
   }
 
   @Override public int characteristics() {
