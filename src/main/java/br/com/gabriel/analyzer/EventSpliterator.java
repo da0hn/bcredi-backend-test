@@ -1,8 +1,9 @@
 package br.com.gabriel.analyzer;
 
 import br.com.gabriel.analyzer.events.Event;
-import br.com.gabriel.analyzer.events.EventMetadataBuilder;
 import br.com.gabriel.analyzer.events.EventSchema;
+import br.com.gabriel.analyzer.events.builders.EventMetadataBuilder;
+import br.com.gabriel.analyzer.utils.SpliteratorActionApplier;
 
 import java.util.Spliterator;
 import java.util.function.Consumer;
@@ -14,7 +15,7 @@ public class EventSpliterator implements Spliterator<Event> {
   private final Spliterator<String> data;
 
 
-  public EventSpliterator(final BaseStream<String, Stream<String>> data) {
+  EventSpliterator(final BaseStream<String, Stream<String>> data) {
     this.data = data.spliterator();
   }
 

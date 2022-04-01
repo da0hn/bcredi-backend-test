@@ -1,8 +1,10 @@
 package br.com.gabriel.analyzer.events;
 
-import br.com.gabriel.analyzer.SpliteratorActionApplier;
+import br.com.gabriel.analyzer.events.builders.ProponentEventBuilder;
+import br.com.gabriel.analyzer.events.builders.ProposalEventBuilder;
+import br.com.gabriel.analyzer.events.builders.WarrantyEventBuilder;
+import br.com.gabriel.analyzer.utils.SpliteratorActionApplier;
 
-import java.util.Locale;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 
@@ -11,7 +13,7 @@ import static br.com.gabriel.analyzer.events.EventAction.REMOVED;
 
 public enum EventSchema {
 
-  WARRANTY {
+  WARRANTY() {
     @Override public boolean convertFromSpliterator(
       final Spliterator<String> spliterator,
       final EventMetadata event,
@@ -42,7 +44,7 @@ public enum EventSchema {
 
     }
   },
-  PROPONENT {
+  PROPONENT() {
     @Override public boolean convertFromSpliterator(
       final Spliterator<String> spliterator,
       final EventMetadata event,
@@ -69,7 +71,7 @@ public enum EventSchema {
       return true;
     }
   },
-  PROPOSAL {
+  PROPOSAL() {
     @Override public boolean convertFromSpliterator(
       final Spliterator<String> spliterator,
       final EventMetadata event,
@@ -93,9 +95,6 @@ public enum EventSchema {
     }
   };
 
-  public String asRaw() {
-    return this.name().toLowerCase(Locale.ROOT);
-  }
 
   public abstract boolean convertFromSpliterator(
     Spliterator<String> spliterator,
