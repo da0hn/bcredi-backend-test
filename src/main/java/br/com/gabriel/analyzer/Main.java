@@ -7,10 +7,10 @@ import java.util.List;
 
 public class Main {
 
-  public static void main(String[] args) throws Exception {
+  public static void main(final String[] args) throws Exception {
     System.out.println("Starting tests...");
 
-    String[] inputFiles = {
+    final String[] inputFiles = {
       "./data/input/input000.txt",
       "./data/input/input001.txt",
       "./data/input/input002.txt",
@@ -26,7 +26,7 @@ public class Main {
       "./data/input/input012.txt"
     };
 
-    String[] outputFiles = {
+    final String[] outputFiles = {
       "./data/output/output000.txt",
       "./data/output/output001.txt",
       "./data/output/output002.txt",
@@ -42,16 +42,18 @@ public class Main {
       "./data/output/output012.txt"
     };
 
-    var analyzer = new MessageAnalyzer();
+    final Analyzer analyzer = new MessageAnalyzer();
 
     for(int i = 0; i <= outputFiles.length - 1; ++i) {
-      Path inputPath = Paths.get(inputFiles[i]);
-      Path outputPath = Paths.get(outputFiles[i]);
+      final Path inputPath = Paths.get(inputFiles[i]);
+      final Path outputPath = Paths.get(outputFiles[i]);
 
-      List<String> inputLines = Files.readAllLines(inputPath);
-      List<String> outputLines = Files.readAllLines(outputPath);
+      final List<String> inputLines = Files.readAllLines(inputPath);
+      final List<String> outputLines = Files.readAllLines(outputPath);
 
-      if(analyzer.execute(inputLines).equals(outputLines.get(0))) {
+      final String output = analyzer.execute(inputLines);
+
+      if(output.equals(outputLines.get(0))) {
         System.out.printf("Test %s/%s - Passed ✔%n", i + 1, outputFiles.length);
       }
       else {
