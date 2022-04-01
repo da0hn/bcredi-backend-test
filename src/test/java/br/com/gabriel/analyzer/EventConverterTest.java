@@ -23,7 +23,7 @@ public class EventConverterTest {
 
   @BeforeEach
   void setUp() {
-    String[] rawData = {
+    final String[] rawData = {
       "72ff1d14-756a-4549-9185-e60e326baf1b,proposal,created,2019-11-11T14:28:01Z,80921e5f-4307-4623-9ddb-5bf826a31dd7,1141424.0,240",
       "af744f6d-d5c0-41e9-b04f-ee524befa425,warranty,added,2019-11-11T14:28:01Z,80921e5f-4307-4623-9ddb-5bf826a31dd7,31c1dd83-8fb7-44ff-8cb7-947e604f6293,3245356.0,DF",
       "450951ee-a38d-475c-ac21-f22b4566fb29,warranty,added,2019-11-11T14:28:01Z,80921e5f-4307-4623-9ddb-5bf826a31dd7,c8753500-1982-4003-8287-3b46c75d4803,3413113.45,DF",
@@ -38,7 +38,7 @@ public class EventConverterTest {
   @Test
   @DisplayName("Should have 6 events")
   void test1() {
-    var events = StreamSupport.stream(
+    final var events = StreamSupport.stream(
       new EventSpliterator(this.data),
       false
     ).toList();
@@ -50,7 +50,7 @@ public class EventConverterTest {
   @Test
   @DisplayName("Should contain 4 warranty")
   void test2() {
-    var events = StreamSupport.stream(new EventSpliterator(this.data), false)
+    final var events = StreamSupport.stream(new EventSpliterator(this.data), false)
       .filter(WarrantyEvent.class::isInstance)
       .toList();
 
@@ -63,7 +63,7 @@ public class EventConverterTest {
   @DisplayName("Should contain 1 proposal")
   void test3() {
 
-    var events = StreamSupport.stream(new EventSpliterator(this.data), false)
+    final var events = StreamSupport.stream(new EventSpliterator(this.data), false)
       .filter(ProposalEvent.class::isInstance)
       .toList();
 
@@ -76,7 +76,7 @@ public class EventConverterTest {
   @DisplayName("Should contain 2 proponent")
   void test4() {
 
-    var events = StreamSupport.stream(new EventSpliterator(this.data), false)
+    final var events = StreamSupport.stream(new EventSpliterator(this.data), false)
       .filter(ProponentEvent.class::isInstance)
       .toList();
 
@@ -88,7 +88,7 @@ public class EventConverterTest {
   @Test
   @DisplayName("Should convert correctly an event of schema Warranty and type REMOVED")
   void test5() {
-    var events = StreamSupport.stream(new EventSpliterator(this.data), false)
+    final var events = StreamSupport.stream(new EventSpliterator(this.data), false)
       .filter(event -> (event instanceof WarrantyEvent warrantyEvent) && (warrantyEvent.event().action() == REMOVED))
       .toList();
 
