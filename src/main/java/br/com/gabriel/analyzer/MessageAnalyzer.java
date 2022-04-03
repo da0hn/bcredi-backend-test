@@ -27,7 +27,7 @@ public class MessageAnalyzer implements Analyzer {
 
     final List<Proposal> proposals = eventsByProposalId.entrySet()
       .stream()
-      .map(entry -> new Proposal(entry.getKey(), entry.getValue()))
+      .map(Proposal::fromEntry)
       .toList();
 
 
