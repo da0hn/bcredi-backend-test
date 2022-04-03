@@ -7,7 +7,7 @@ public final class ProposalEventBuilderImpl implements ProposalEventBuilder {
   private EventMetadata event;
   private String id;
   private Double loanValue;
-  private Long numberOfMonthlyInstallments;
+  private Integer numberOfMonthlyInstallments;
 
   ProposalEventBuilderImpl() {
   }
@@ -25,7 +25,7 @@ public final class ProposalEventBuilderImpl implements ProposalEventBuilder {
   }
 
   @Override public void withNumberOfMonthlyInstallments(final String numberOfMonthlyInstallments) {
-    this.numberOfMonthlyInstallments = Long.valueOf(numberOfMonthlyInstallments);
+    this.numberOfMonthlyInstallments = Integer.valueOf(numberOfMonthlyInstallments);
   }
 
   @Override public ProposalEvent build() {

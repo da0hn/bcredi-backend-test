@@ -4,6 +4,6 @@ public record ProposalEvent(
   EventMetadata event,
   String proposalId,
   Double loanValue,
-  Long numberOfMonthlyInstallments
+  Integer numberOfMonthlyInstallments
 ) implements Event {
 }
