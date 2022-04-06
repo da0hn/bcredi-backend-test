@@ -13,7 +13,7 @@ import static br.com.gabriel.analyzer.ProposalTestUtils.PROPOSAL_ID;
 
 @Tag("unit")
 @DisplayName("Loan value validation test")
-public class ProposalLoanValidationTest {
+class ProposalLoanValidationTest {
 
   @BeforeEach
   void setUp() {
@@ -27,7 +27,7 @@ public class ProposalLoanValidationTest {
       .addWarrantyEvent(3_413_113.45, "DF")
       .addWarrantyEvent(3_245_356.0, "DF")
       .addProponentEvent("Ismael Streich Jr.", 42, 62_615.64, true)
-      .addProponentEvent("Mrs. Peter Wisozk", 41, 67_745.71, true)
+      .addProponentEvent("Mrs. Peter Wisozk", 41, 67_745.71, false)
       .build();
 
     final var proposal = new Proposal(PROPOSAL_ID, events);
@@ -47,7 +47,7 @@ public class ProposalLoanValidationTest {
       .addProponentEvent("Mrs. Peter Wisozk", 41, 67_745.71, false)
       .build();
 
-    final Proposal proposal = new Proposal(
+    final var proposal = new Proposal(
       PROPOSAL_ID,
       events
     );
@@ -67,7 +67,7 @@ public class ProposalLoanValidationTest {
       .addProponentEvent("Mrs. Peter Wisozk", 41, 67_745.71, false)
       .build();
 
-    final Proposal proposal = new Proposal(
+    final var proposal = new Proposal(
       PROPOSAL_ID,
       events
     );
