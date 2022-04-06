@@ -58,9 +58,9 @@ public class ProposalTestUtils {
     static EventStubBuilder builder() {
       return new EventStubBuilderImpl();
     }
-    EventStubBuilder addValidProposal();
-    EventStubBuilder addLowerLoanValueInvalidProposal();
-    EventStubBuilder addHigherLoanValueInvalidProposal();
+    EventStubBuilder addValidProposalEvent();
+    EventStubBuilder addLowerLoanValueInvalidProposalEvent();
+    EventStubBuilder addHigherLoanValueInvalidProposalEvent();
     EventStubBuilder addWarrantyEvent(double value, String province);
     EventStubBuilder addProponentEvent(
       String name,
@@ -71,12 +71,12 @@ public class ProposalTestUtils {
     List<Event> build();
   }
 
-  public static class EventStubBuilderImpl implements EventStubBuilder {
+  private static class EventStubBuilderImpl implements EventStubBuilder {
 
     private static final Logger LOGGER = Logger.getLogger("aLogger");
     private final List<Event> events = new ArrayList<>();
 
-    @Override public EventStubBuilder addValidProposal() {
+    @Override public EventStubBuilder addValidProposalEvent() {
       this.addEvent(VALID_PROPOSAL_EVENT);
       return this;
     }
@@ -86,12 +86,12 @@ public class ProposalTestUtils {
       this.events.add(event);
     }
 
-    @Override public EventStubBuilder addLowerLoanValueInvalidProposal() {
+    @Override public EventStubBuilder addLowerLoanValueInvalidProposalEvent() {
       this.events.add(LOWER_LOAN_VALUE_PROPOSAL_EVENT);
       return this;
     }
 
-    @Override public EventStubBuilder addHigherLoanValueInvalidProposal() {
+    @Override public EventStubBuilder addHigherLoanValueInvalidProposalEvent() {
       this.addEvent(HIGHER_LOAN_VALUE_PROPOSAL_EVENT);
       return this;
     }

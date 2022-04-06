@@ -23,7 +23,7 @@ class ProposalLoanValueValidationTest {
   @DisplayName("Should return true when loan value between 30.000,00 and 3.000.000,00")
   void test1() {
     final var events = EventStubBuilder.builder()
-      .addValidProposal()
+      .addValidProposalEvent()
       .addWarrantyEvent(3_413_113.45, "DF")
       .addWarrantyEvent(3_245_356.0, "DF")
       .addProponentEvent("Ismael Streich Jr.", 42, 62_615.64, true)
@@ -40,7 +40,7 @@ class ProposalLoanValueValidationTest {
   void test2() {
 
     final var events = EventStubBuilder.builder()
-      .addLowerLoanValueInvalidProposal()
+      .addLowerLoanValueInvalidProposalEvent()
       .addWarrantyEvent(3_413_113.45, "DF")
       .addWarrantyEvent(3_245_356.0, "DF")
       .addProponentEvent("Ismael Streich Jr.", 42, 62_615.64, true)
@@ -60,7 +60,7 @@ class ProposalLoanValueValidationTest {
   void test3() {
 
     final var events = EventStubBuilder.builder()
-      .addHigherLoanValueInvalidProposal()
+      .addHigherLoanValueInvalidProposalEvent()
       .addWarrantyEvent(3_413_113.45, "DF")
       .addWarrantyEvent(3_245_356.0, "DF")
       .addProponentEvent("Ismael Streich Jr.", 42, 62_615.64, true)
