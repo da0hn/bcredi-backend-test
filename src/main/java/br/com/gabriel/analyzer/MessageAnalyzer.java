@@ -1,5 +1,6 @@
 package br.com.gabriel.analyzer;
 
+import br.com.gabriel.analyzer.domain.Proposal;
 import br.com.gabriel.analyzer.events.Event;
 
 import java.util.Arrays;
