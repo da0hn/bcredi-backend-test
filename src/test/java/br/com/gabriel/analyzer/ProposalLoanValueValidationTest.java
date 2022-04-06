@@ -12,8 +12,8 @@ import static br.com.gabriel.analyzer.ProposalTestUtils.EventStubBuilder;
 import static br.com.gabriel.analyzer.ProposalTestUtils.PROPOSAL_ID;
 
 @Tag("unit")
-@DisplayName("Loan value validation test")
-class ProposalLoanValidationTest {
+@DisplayName("Proposal loan value validation test")
+class ProposalLoanValueValidationTest {
 
   @BeforeEach
   void setUp() {
