@@ -17,7 +17,7 @@ import static br.com.gabriel.analyzer.events.EventAction.REMOVED;
 
 @Tag("unit")
 @DisplayName("Event converter test")
-public class EventConverterTest {
+class EventConverterTest {
 
   Stream<String> data;
 
