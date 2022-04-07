@@ -59,6 +59,7 @@ public class ProposalTestUtils {
       return new EventStubBuilderImpl();
     }
     EventStubBuilder addValidProposalEvent();
+    EventStubBuilder addProposalEvent(Double loanValue, Integer numberOfMonthlyInstallments);
     EventStubBuilder addLowerLoanValueInvalidProposalEvent();
     EventStubBuilder addHigherLoanValueInvalidProposalEvent();
     EventStubBuilder addWarrantyEvent(double value, String province);
@@ -81,9 +82,14 @@ public class ProposalTestUtils {
       return this;
     }
 
-    private void addEvent(final Event event) {
-      LOGGER.info(MessageFormat.format("Adding an event: {0}", event));
-      this.events.add(event);
+    @Override public EventStubBuilder addProposalEvent(final Double loanValue, final Integer numberOfMonthlyInstallments) {
+      this.addEvent(new ProposalEvent(
+        anEvent(PROPOSAL, ADDED),
+        PROPOSAL_ID,
+        loanValue,
+        numberOfMonthlyInstallments
+      ));
+      return this;
     }
 
     @Override public EventStubBuilder addLowerLoanValueInvalidProposalEvent() {
@@ -127,6 +133,11 @@ public class ProposalTestUtils {
 
     @Override public List<Event> build() {
       return Collections.unmodifiableList(this.events);
+    }
+
+    private void addEvent(final Event event) {
+      LOGGER.info(MessageFormat.format("Adding an event: {0}", event));
+      this.events.add(event);
     }
   }
 
