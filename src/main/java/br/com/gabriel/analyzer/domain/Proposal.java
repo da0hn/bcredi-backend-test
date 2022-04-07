@@ -8,16 +8,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import static br.com.gabriel.analyzer.domain.ProposalConstants.MAX_LOAN_VALUE;
+import static br.com.gabriel.analyzer.domain.ProposalConstants.MIN_LOAN_VALUE;
 import static br.com.gabriel.analyzer.events.EventAction.ADDED;
 
 public class Proposal implements Validable {
 
-  private static final int ONE_MONTH = 1;
-  private static final int ONE_YEAR = 12 * ONE_MONTH;
-  private static final int MIN_YEAR_INSTALLMENTS = ONE_YEAR * 2;
-  private static final int MAX_YEAR_INSTALLMENTS = ONE_YEAR * 15;
-  private static final double MIN_LOAN_VALUE = 30_000;
-  private static final double MAX_LOAN_VALUE = 3_000_000;
+
   private final String proposalId;
   private final List<Event> events;
 
