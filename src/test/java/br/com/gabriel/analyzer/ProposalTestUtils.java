@@ -29,20 +29,20 @@ public class ProposalTestUtils {
     anEvent(PROPOSAL, ADDED),
     PROPOSAL_ID,
     1_141_424.0,
-    240
+    150
   );
 
   private static final Event LOWER_LOAN_VALUE_PROPOSAL_EVENT = new ProposalEvent(
     anEvent(PROPOSAL, ADDED),
     PROPOSAL_ID,
     29_999.99,
-    240
+    150
   );
   private static final Event HIGHER_LOAN_VALUE_PROPOSAL_EVENT = new ProposalEvent(
     anEvent(PROPOSAL, ADDED),
     PROPOSAL_ID,
     3_000_001.0,
-    240
+    150
   );
 
   public static EventMetadata anEvent(final EventSchema schema, final EventAction action) {
