@@ -9,7 +9,9 @@ import java.util.List;
 import java.util.Map;
 
 import static br.com.gabriel.analyzer.domain.ProposalConstants.MAX_LOAN_VALUE;
+import static br.com.gabriel.analyzer.domain.ProposalConstants.MAX_YEAR_INSTALLMENTS;
 import static br.com.gabriel.analyzer.domain.ProposalConstants.MIN_LOAN_VALUE;
+import static br.com.gabriel.analyzer.domain.ProposalConstants.MIN_YEAR_INSTALLMENTS;
 import static br.com.gabriel.analyzer.events.EventAction.ADDED;
 
 public class Proposal implements Validable {
@@ -30,12 +32,20 @@ public class Proposal implements Validable {
   public boolean valid() {
     try {
       ifInvalidLoanvalueThrowException();
+      ifInvalidInstallmentsThrowException();
     }
     catch(final ProposalInvalidException exception) {
       System.err.println(exception.getMessage());
       return false;
     }
     return true;
+  }
+
+  private void ifInvalidInstallmentsThrowException() {
+    final var proposalEvent = proposalEvent();
+    if(proposalEvent.numberOfMonthlyInstallments() < MIN_YEAR_INSTALLMENTS || proposalEvent.numberOfMonthlyInstallments() > MAX_YEAR_INSTALLMENTS) {
+      throw new ProposalInvalidException("proposal.years_installments.out_of_bound");
+    }
   }
 
   private void ifInvalidLoanvalueThrowException() {
