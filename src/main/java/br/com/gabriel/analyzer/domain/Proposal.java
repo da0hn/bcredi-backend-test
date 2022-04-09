@@ -26,7 +26,7 @@ public class Proposal implements Validable {
     this.events = Collections.unmodifiableList(events);
   }
 
-  public static Proposal fromEntry(final Map.Entry<String, List<Event>> entry) {
+  public static Proposal fromEntry(final Map.Entry<String, ? extends List<Event>> entry) {
     return new Proposal(entry.getKey(), entry.getValue());
   }
 
@@ -49,21 +49,14 @@ public class Proposal implements Validable {
       .count();
 
     if(numberOfProponents < 2) {
-      throw new ProposalInvalidException("proposal.invalid_proponent_number");
+      throw new ProposalInvalidException("proposal.invalid-proponent-number");
     }
   }
 
   private void ifInvalidInstallmentsThrowException() {
     final var proposalEvent = proposalEvent();
     if(proposalEvent.numberOfMonthlyInstallments() < MIN_YEAR_INSTALLMENTS || proposalEvent.numberOfMonthlyInstallments() > MAX_YEAR_INSTALLMENTS) {
-      throw new ProposalInvalidException("proposal.years_installments.out_of_bound");
-    }
-  }
-
-  private void ifInvalidLoanvalueThrowException() {
-    final var proposalEvent = proposalEvent();
-    if(proposalEvent.loanValue() < MIN_LOAN_VALUE || proposalEvent.loanValue() > MAX_LOAN_VALUE) {
-      throw new ProposalInvalidException("proposal.loan_value.out_of_bound");
+      throw new ProposalInvalidException("proposal.years-installments.out-of-range");
     }
   }
 
@@ -74,6 +67,13 @@ public class Proposal implements Validable {
       .filter(proposalEvent -> proposalEvent.proposalId().equals(this.proposalId))
       .filter(proposalEvent -> proposalEvent.event().action() == ADDED)
       .findFirst()
-      .orElseThrow(() -> new ProposalInvalidException("proposal.proposal_event.not_found"));
+      .orElseThrow(() -> new ProposalInvalidException("proposal.proposal-event.not-found"));
+  }
+
+  private void ifInvalidLoanvalueThrowException() {
+    final var proposalEvent = proposalEvent();
+    if(proposalEvent.loanValue() < MIN_LOAN_VALUE || proposalEvent.loanValue() > MAX_LOAN_VALUE) {
+      throw new ProposalInvalidException("proposal.loan_value.out-of-range");
+    }
   }
 }
