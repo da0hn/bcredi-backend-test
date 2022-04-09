@@ -37,12 +37,26 @@ public class Proposal implements Validable {
       ifInvalidLoanvalueThrowException();
       ifInvalidInstallmentsThrowException();
       ifInvalidProponentNumberThrowException();
+      ifInvalidMainProponentThrowException();
     }
     catch(final ProposalInvalidException exception) {
       LOGGER.info(exception.getMessage());
       return false;
     }
     return true;
+  }
+
+  private void ifInvalidMainProponentThrowException() {
+
+    final var numberOfMainProponent = this.events.stream()
+      .filter(ProponentEvent.class::isInstance)
+      .map(ProponentEvent.class::cast)
+      .filter(ProponentEvent::isMain)
+      .count();
+
+    if(numberOfMainProponent != 1) {
+      throw new ProposalInvalidException("proposal.inavlid-main-proponent");
+    }
   }
 
   private void ifInvalidProponentNumberThrowException() {
