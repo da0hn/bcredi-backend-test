@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Tag("unit")
-@DisplayName("Number of proponent by proposal validation")
+@DisplayName("Number of proponent by proposal validation test")
 class ProposalProponentNumberValidationTest {
 
 
