@@ -8,6 +8,7 @@ import br.com.gabriel.analyzer.validators.Validable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import static br.com.gabriel.analyzer.domain.ProposalConstants.MAX_LOAN_VALUE;
 import static br.com.gabriel.analyzer.domain.ProposalConstants.MAX_YEAR_INSTALLMENTS;
@@ -18,6 +19,7 @@ import static br.com.gabriel.analyzer.events.EventAction.ADDED;
 public class Proposal implements Validable {
 
 
+  private static final Logger LOGGER = Logger.getLogger("proposal");
   private final String proposalId;
   private final List<Event> events;
 
@@ -37,7 +39,7 @@ public class Proposal implements Validable {
       ifInvalidProponentNumberThrowException();
     }
     catch(final ProposalInvalidException exception) {
-      System.err.println(exception.getMessage());
+      LOGGER.info(exception.getMessage());
       return false;
     }
     return true;
@@ -60,6 +62,13 @@ public class Proposal implements Validable {
     }
   }
 
+  private void ifInvalidLoanvalueThrowException() {
+    final var proposalEvent = proposalEvent();
+    if(proposalEvent.loanValue() < MIN_LOAN_VALUE || proposalEvent.loanValue() > MAX_LOAN_VALUE) {
+      throw new ProposalInvalidException("proposal.loan_value.out-of-range");
+    }
+  }
+
   private ProposalEvent proposalEvent() {
     return this.events.stream()
       .filter(ProposalEvent.class::isInstance)
@@ -68,12 +77,5 @@ public class Proposal implements Validable {
       .filter(proposalEvent -> proposalEvent.event().action() == ADDED)
       .findFirst()
       .orElseThrow(() -> new ProposalInvalidException("proposal.proposal-event.not-found"));
-  }
-
-  private void ifInvalidLoanvalueThrowException() {
-    final var proposalEvent = proposalEvent();
-    if(proposalEvent.loanValue() < MIN_LOAN_VALUE || proposalEvent.loanValue() > MAX_LOAN_VALUE) {
-      throw new ProposalInvalidException("proposal.loan_value.out-of-range");
-    }
   }
 }
