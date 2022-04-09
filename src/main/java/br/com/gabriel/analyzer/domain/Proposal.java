@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 
 import static br.com.gabriel.analyzer.domain.ProposalConstants.MAX_LOAN_VALUE;
 import static br.com.gabriel.analyzer.domain.ProposalConstants.MAX_YEAR_INSTALLMENTS;
+import static br.com.gabriel.analyzer.domain.ProposalConstants.MIN_AGE;
 import static br.com.gabriel.analyzer.domain.ProposalConstants.MIN_LOAN_VALUE;
 import static br.com.gabriel.analyzer.domain.ProposalConstants.MIN_YEAR_INSTALLMENTS;
 import static br.com.gabriel.analyzer.events.EventAction.ADDED;
@@ -34,16 +35,29 @@ public class Proposal implements Validable {
 
   public boolean valid() {
     try {
-      ifInvalidLoanvalueThrowException();
+      ifInvalidLoanValueThrowException();
       ifInvalidInstallmentsThrowException();
       ifInvalidProponentNumberThrowException();
       ifInvalidMainProponentThrowException();
+      ifProponentAgeLessThan18ThrowException();
     }
     catch(final ProposalInvalidException exception) {
       LOGGER.info(exception.getMessage());
       return false;
     }
     return true;
+  }
+
+  private void ifProponentAgeLessThan18ThrowException() {
+    final var proponentsWithInvalidAge = this.events.stream()
+      .filter(ProponentEvent.class::isInstance)
+      .map(ProponentEvent.class::cast)
+      .filter(proponent -> proponent.age() < MIN_AGE)
+      .count();
+
+    if(proponentsWithInvalidAge > 0) {
+      throw new ProposalInvalidException("proposal.invalid-proponent-age");
+    }
   }
 
   private void ifInvalidMainProponentThrowException() {
@@ -55,7 +69,7 @@ public class Proposal implements Validable {
       .count();
 
     if(numberOfMainProponent != 1) {
-      throw new ProposalInvalidException("proposal.inavlid-main-proponent");
+      throw new ProposalInvalidException("proposal.invalid-main-proponent");
     }
   }
 
@@ -76,7 +90,7 @@ public class Proposal implements Validable {
     }
   }
 
-  private void ifInvalidLoanvalueThrowException() {
+  private void ifInvalidLoanValueThrowException() {
     final var proposalEvent = proposalEvent();
     if(proposalEvent.loanValue() < MIN_LOAN_VALUE || proposalEvent.loanValue() > MAX_LOAN_VALUE) {
       throw new ProposalInvalidException("proposal.loan_value.out-of-range");
