@@ -3,12 +3,16 @@ package br.com.gabriel.analyzer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.MessageFormat;
 import java.util.List;
+import java.util.logging.Logger;
 
-public class Main {
+public final class Main {
+
+  private static final Logger LOGGER = Logger.getLogger("main");
 
   public static void main(final String[] args) throws Exception {
-    System.out.println("Starting tests...");
+    LOGGER.info("Starting tests...");
 
     final String[] inputFiles = {
       "./data/input/input000.txt",
@@ -54,10 +58,10 @@ public class Main {
       final String output = analyzer.execute(inputLines);
 
       if(output.equals(outputLines.get(0))) {
-        System.out.printf("Test %s/%s - Passed ✔%n", i + 1, outputFiles.length);
+        LOGGER.info(MessageFormat.format("Test {0}/{1} - Passed ✔", i + 1, outputFiles.length));
       }
       else {
-        System.out.printf("Test %s/%s - Failed ❌%n", i + 1, outputFiles.length);
+        LOGGER.info(MessageFormat.format("Test {0}/{1} - Failed ❌", i + 1, outputFiles.length));
       }
     }
   }
