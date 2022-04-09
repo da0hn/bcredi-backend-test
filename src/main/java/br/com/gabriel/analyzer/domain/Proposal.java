@@ -1,6 +1,7 @@
 package br.com.gabriel.analyzer.domain;
 
 import br.com.gabriel.analyzer.events.Event;
+import br.com.gabriel.analyzer.events.ProponentEvent;
 import br.com.gabriel.analyzer.events.ProposalEvent;
 import br.com.gabriel.analyzer.validators.Validable;
 
@@ -33,12 +34,23 @@ public class Proposal implements Validable {
     try {
       ifInvalidLoanvalueThrowException();
       ifInvalidInstallmentsThrowException();
+      ifInvalidProponentNumberThrowException();
     }
     catch(final ProposalInvalidException exception) {
       System.err.println(exception.getMessage());
       return false;
     }
     return true;
+  }
+
+  private void ifInvalidProponentNumberThrowException() {
+    final var numberOfProponents = this.events.stream()
+      .filter(ProponentEvent.class::isInstance)
+      .count();
+
+    if(numberOfProponents < 2) {
+      throw new ProposalInvalidException("proposal.invalid_proponent_number");
+    }
   }
 
   private void ifInvalidInstallmentsThrowException() {
