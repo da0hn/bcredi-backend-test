@@ -21,9 +21,9 @@ import static br.com.gabriel.analyzer.events.EventSchema.PROPONENT;
 import static br.com.gabriel.analyzer.events.EventSchema.PROPOSAL;
 import static br.com.gabriel.analyzer.events.EventSchema.WARRANTY;
 
-public class ProposalTestUtils {
+public final class ProposalTestUtils {
 
-  public static final String PROPOSAL_ID = "80921e5f-4307-4623-9ddb-5bf826a31dd7";
+  static final String PROPOSAL_ID = "80921e5f-4307-4623-9ddb-5bf826a31dd7";
 
   private static final Event VALID_PROPOSAL_EVENT = new ProposalEvent(
     anEvent(PROPOSAL, ADDED),
@@ -45,7 +45,7 @@ public class ProposalTestUtils {
     150
   );
 
-  public static EventMetadata anEvent(final EventSchema schema, final EventAction action) {
+  private static EventMetadata anEvent(final EventSchema schema, final EventAction action) {
     return new EventMetadata(
       UUID.randomUUID().toString(),
       schema,
