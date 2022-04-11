@@ -3,6 +3,7 @@ package br.com.gabriel.analyzer.domain;
 import br.com.gabriel.analyzer.events.Event;
 import br.com.gabriel.analyzer.events.ProponentEvent;
 import br.com.gabriel.analyzer.events.ProposalEvent;
+import br.com.gabriel.analyzer.events.WarrantyEvent;
 import br.com.gabriel.analyzer.validators.Validable;
 
 import java.util.Collections;
@@ -40,12 +41,23 @@ public class Proposal implements Validable {
       ifNumberOfProponentsIsLowerThanTwoThrowException();
       ifNotHaveExactlyOneMainProponentThrowException();
       ifProponentAgeLessThanEighteenThrowException();
+      ifNumberOfWarrantyIsLowerThanOneThrowException();
     }
     catch(final ProposalInvalidException exception) {
       LOGGER.info(exception.getMessage());
       return false;
     }
     return true;
+  }
+
+  private void ifNumberOfWarrantyIsLowerThanOneThrowException() {
+    final var numberOfWarranty = this.events.stream()
+      .filter(WarrantyEvent.class::isInstance)
+      .map(WarrantyEvent.class::cast)
+      .count();
+    if(numberOfWarranty < 1) {
+      throw new ProposalInvalidException("proposal.invalid-warranty-number");
+    }
   }
 
   private void ifProponentAgeLessThanEighteenThrowException() {
