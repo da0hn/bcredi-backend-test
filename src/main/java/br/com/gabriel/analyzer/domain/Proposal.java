@@ -35,11 +35,11 @@ public class Proposal implements Validable {
 
   public boolean valid() {
     try {
-      ifInvalidLoanValueThrowException();
-      ifInvalidInstallmentsThrowException();
-      ifInvalidProponentNumberThrowException();
-      ifInvalidMainProponentThrowException();
-      ifProponentAgeLessThan18ThrowException();
+      ifLoanValueOutOfRangeThrowException();
+      ifMonthlyInstallmentsOutOfRangeThrowException();
+      ifNumberOfProponentsIsLowerThanTwoThrowException();
+      ifNotHaveExactlyOneMainProponentThrowException();
+      ifProponentAgeLessThanEighteenThrowException();
     }
     catch(final ProposalInvalidException exception) {
       LOGGER.info(exception.getMessage());
@@ -48,7 +48,7 @@ public class Proposal implements Validable {
     return true;
   }
 
-  private void ifProponentAgeLessThan18ThrowException() {
+  private void ifProponentAgeLessThanEighteenThrowException() {
     final var proponentsWithInvalidAge = this.events.stream()
       .filter(ProponentEvent.class::isInstance)
       .map(ProponentEvent.class::cast)
@@ -60,7 +60,7 @@ public class Proposal implements Validable {
     }
   }
 
-  private void ifInvalidMainProponentThrowException() {
+  private void ifNotHaveExactlyOneMainProponentThrowException() {
 
     final var numberOfMainProponent = this.events.stream()
       .filter(ProponentEvent.class::isInstance)
@@ -73,7 +73,7 @@ public class Proposal implements Validable {
     }
   }
 
-  private void ifInvalidProponentNumberThrowException() {
+  private void ifNumberOfProponentsIsLowerThanTwoThrowException() {
     final var numberOfProponents = this.events.stream()
       .filter(ProponentEvent.class::isInstance)
       .count();
@@ -83,14 +83,14 @@ public class Proposal implements Validable {
     }
   }
 
-  private void ifInvalidInstallmentsThrowException() {
+  private void ifMonthlyInstallmentsOutOfRangeThrowException() {
     final var proposalEvent = proposalEvent();
     if(proposalEvent.numberOfMonthlyInstallments() < MIN_YEAR_INSTALLMENTS || proposalEvent.numberOfMonthlyInstallments() > MAX_YEAR_INSTALLMENTS) {
       throw new ProposalInvalidException("proposal.years-installments.out-of-range");
     }
   }
 
-  private void ifInvalidLoanValueThrowException() {
+  private void ifLoanValueOutOfRangeThrowException() {
     final var proposalEvent = proposalEvent();
     if(proposalEvent.loanValue() < MIN_LOAN_VALUE || proposalEvent.loanValue() > MAX_LOAN_VALUE) {
       throw new ProposalInvalidException("proposal.loan_value.out-of-range");
