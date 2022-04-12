@@ -42,12 +42,28 @@ public class Proposal implements Validable {
       ifNotHaveExactlyOneMainProponentThrowException();
       ifProponentAgeLessThanEighteenThrowException();
       ifNumberOfWarrantyIsLowerThanOneThrowException();
+      ifWarrantyValueIsLowerThanTwiceLoanValueThrowException();
     }
     catch(final ProposalInvalidException exception) {
       LOGGER.info(exception.getMessage());
       return false;
     }
     return true;
+  }
+
+  private void ifWarrantyValueIsLowerThanTwiceLoanValueThrowException() {
+    final var totalWarrantyValue = this.events.stream()
+      .filter(WarrantyEvent.class::isInstance)
+      .map(WarrantyEvent.class::cast)
+      .map(WarrantyEvent::value)
+      .reduce(Double::sum)
+      .orElse(0.0);
+
+    final var proposalEvent = this.proposalEvent();
+
+    if(totalWarrantyValue < proposalEvent.loanValue() * 2) {
+      throw new ProposalInvalidException("proposal.invalid-warranty-value");
+    }
   }
 
   private void ifNumberOfWarrantyIsLowerThanOneThrowException() {
