@@ -22,10 +22,10 @@ Para começar o desafio:
 * O valor do empréstimo deve estar entre R$ 30.000,00 e R$ 3.000.000,00 ✔
 * O empréstimo deve ser pago em no mínimo 2 anos e no máximo 15 anos ✔
 * Deve haver no mínimo 2 proponentes por proposta ✔
-* Deve haver exatamente 1 proponente principal por proposta
-* Todos os proponentes devem ser maiores de 18 anos
-* Dever haver no mínimo 1 garantia de imóvel por proposta
-* A soma do valor das garantias deve ser maior ou igual ao dobro do valor do empréstimo
+* Deve haver exatamente 1 proponente principal por proposta ✔
+* Todos os proponentes devem ser maiores de 18 anos ✔
+* Dever haver no mínimo 1 garantia de imóvel por proposta ✔
+* A soma do valor das garantias deve ser maior ou igual ao dobro do valor do empréstimo ✔
 * As garantias de imóvel dos estados PR, SC e RS não são aceitas
 * A renda do proponente principal deve ser pelo menos:
   * 4 vezes o valor da parcela do empréstimo, se a idade dele for entre 18 e 24 anos
