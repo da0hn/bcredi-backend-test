@@ -44,12 +44,36 @@ public class Proposal implements Validable {
       ifNumberOfWarrantyIsLowerThanOneThrowException();
       ifWarrantyValueIsLowerThanTwiceLoanValueThrowException();
       ifWarrantyProvinceIsNotValidThrowException();
+      ifMonthlyIncomeIsLowerThanLoanValueLimitThrowException();
     }
     catch(final ProposalInvalidException exception) {
       LOGGER.info(exception.getMessage());
       return false;
     }
     return true;
+  }
+
+  private void ifMonthlyIncomeIsLowerThanLoanValueLimitThrowException() {
+    final var mainProponent = this.events.stream()
+      .filter(ProponentEvent.class::isInstance)
+      .map(ProponentEvent.class::cast)
+      .filter(ProponentEvent::isMain)
+      .findFirst()
+      .orElseThrow(() -> new ProposalInvalidException("proposal.main-proponent.not-found"));
+
+    final var loanInstallmentAmount = this.loanInstallmentAmount();
+
+    final var minimumMonthlyIncomeValue = MultiplierFactorAgeBased.fromAge(mainProponent.age()).calculate(loanInstallmentAmount);
+
+    if(mainProponent.monthlyIncome() < minimumMonthlyIncomeValue) {
+      throw new ProposalInvalidException("proposal.invalid-loan-installment-amount");
+    }
+
+  }
+
+  private double loanInstallmentAmount() {
+    final var proposalEvent = this.proposalEvent();
+    return proposalEvent.loanValue() / proposalEvent.numberOfMonthlyInstallments();
   }
 
   private void ifWarrantyProvinceIsNotValidThrowException() {
@@ -136,7 +160,7 @@ public class Proposal implements Validable {
   private void ifLoanValueOutOfRangeThrowException() {
     final var proposalEvent = proposalEvent();
     if(proposalEvent.loanValue() < MIN_LOAN_VALUE || proposalEvent.loanValue() > MAX_LOAN_VALUE) {
-      throw new ProposalInvalidException("proposal.loan_value.out-of-range");
+      throw new ProposalInvalidException("proposal.loan-value.out-of-range");
     }
   }
 
