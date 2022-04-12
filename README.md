@@ -2,20 +2,25 @@
 
 # Teste de Back-end Bcredi
 
-Na Bcredi utilizamos sistemas de mensageria para integrar nossos microsserviços. Nesse desafio, você vai resolver um problema real com a linguagem que você escolher. 
+Na Bcredi utilizamos sistemas de mensageria para integrar os nossos microsserviços. Nesse desafio, você vai resolver um problema real com a linguagem
+que você escolher.
 
-Você receberá uma lista de eventos com dados de propostas de empréstimo, garantias de imóvel e proponentes. Com base em regras de validação, você precisar retornar quais propostas são válidas após processar todos os eventos.
+Receberá uma lista de eventos com dados de propostas de empréstimo, garantias de imóvel e proponentes. Com base em regras de validação, você precisar
+retornar quais propostas são válidas após processar todos os eventos.
 
-Uma proposta é o modelo que contém as informações de um empréstimo. Cada proposta deve conter múltiplos imóveis de garantia. A proposta também deve conter múltiplos proponentes, que são as pessoas envolvidas no contrato de empréstimo.
+Uma proposta é o modelo que contém as informações de um empréstimo. Cada proposta deve conter múltiplos imóveis de garantia. A proposta também deve
+conter múltiplos proponentes que são as pessoas envolvidas no contrato de empréstimo.
 
 Para começar o desafio:
 
 1. Faça um fork deste repositório
 2. Clone este projeto
-3. Escolha sua linguagem de preferência e edite o arquivo respectivo. Por exemplo, se você quer resolver em Ruby, o arquivo é `./ruby/solution.rb`; e se for Java `./java/solution.java`
-4. Para testar sua solução, utilize os inputs e outputs definidos em `./test/input/*.txt` e `./test/output/*.txt`
+3. Escolha a sua linguagem de preferência e edite o arquivo respectivo. Por exemplo, se você quer resolver em Ruby, o arquivo é `./ruby/solution.rb`;
+   e se for Java `./java/solution.java`
+4. Para testar a sua solução, utilize os inputs e outputs definidos em `./test/input/*.txt` e `./test/output/*.txt`
 
-⚠️ Lembre-se de manter seu código limpo (temos um exemplar do Clean Code no escritório), seguindo as convenções da comunidade da linguagem de você escolher e, é claro, de escrever testes.
+⚠️ Lembre-se de manter o seu código limpo (temos um exemplar do Clean Code no escritório), seguindo as convenções da comunidade da linguagem de você
+escolher e, é claro, de escrever testes.
 
 ## Regras
 
@@ -26,7 +31,7 @@ Para começar o desafio:
 * Todos os proponentes devem ser maiores de 18 anos ✔
 * Dever haver no mínimo 1 garantia de imóvel por proposta ✔
 * A soma do valor das garantias deve ser maior ou igual ao dobro do valor do empréstimo ✔
-* As garantias de imóvel dos estados PR, SC e RS não são aceitas
+* As garantias de imóvel dos estados PR, SC e RS não são aceitas ✔
 * A renda do proponente principal deve ser pelo menos:
   * 4 vezes o valor da parcela do empréstimo, se a idade dele for entre 18 e 24 anos
   * 3 vezes o valor da parcela do empréstimo, se a idade dele for entre 24 e 50 anos
@@ -41,34 +46,34 @@ Para começar o desafio:
 
 A primeira linha contém o número de eventos a serem processados. Da segunda em diante, os dados do evento separados por vírgula.
 
-Cada evento tem seu formato. Veja abaixo:
+Cada evento tem o seu formato. Veja abaixo:
 
 * **proposal.created**: enviado quando uma proposta é criada
-`event_id,event_schema,event_action,event_timestamp,proposal_id,proposal_loan_value,proposal_number_of_monthly_installments`
+  `event_id,event_schema,event_action,event_timestamp,proposal_id,proposal_loan_value,proposal_number_of_monthly_installments`
 
 * **proposal.updated**: enviado quando uma proposta é atualizada
-`event_id,event_schema,event_action,event_timestamp,proposal_id,proposal_loan_value,proposal_number_of_monthly_installments`
+  `event_id,event_schema,event_action,event_timestamp,proposal_id,proposal_loan_value,proposal_number_of_monthly_installments`
 
 * **proposal.deleted**: enviado quando uma proposta é excluída
-`event_id,event_schema,event_action,event_timestamp,proposal_id`
+  `event_id,event_schema,event_action,event_timestamp,proposal_id`
 
 * **warranty.added**: enviado quando um imóvel de garantia é adicionado à uma proposta
-`event_id,event_schema,event_action,event_timestamp,proposal_id,warranty_id,warranty_value,warranty_province`
+  `event_id,event_schema,event_action,event_timestamp,proposal_id,warranty_id,warranty_value,warranty_province`
 
 * **warranty.updated**: enviado quando um imóvel de garantia é atualizado
-`event_id,event_schema,event_action,event_timestamp,proposal_id,warranty_id,warranty_value,warranty_province`
+  `event_id,event_schema,event_action,event_timestamp,proposal_id,warranty_id,warranty_value,warranty_province`
 
 * **warranty.removed**: enviado quando um imóvel de garantia é removido de uma proposta
-`event_id,event_schema,event_action,event_timestamp,proposal_id,warranty_id`
+  `event_id,event_schema,event_action,event_timestamp,proposal_id,warranty_id`
 
 * **proponent.added**: enviado quando um proponente é adicionado à uma proposta
-`event_id,event_schema,event_action,event_timestamp,proposal_id,proponent_id,proponent_name,proponent_age,proponent_monthly_income,proponent_is_main`
+  `event_id,event_schema,event_action,event_timestamp,proposal_id,proponent_id,proponent_name,proponent_age,proponent_monthly_income,proponent_is_main`
 
 * **proponent.updated**: enviado quando um proponente é atualizado
-`event_id,event_schema,event_action,event_timestamp,proposal_id,proponent_id,proponent_name,proponent_age,proponent_monthly_income,proponent_is_main`
+  `event_id,event_schema,event_action,event_timestamp,proposal_id,proponent_id,proponent_name,proponent_age,proponent_monthly_income,proponent_is_main`
 
 * **proponent.removed**: enviado quando um proponente é removido de uma proposta
-` event_id,event_schema,event_action,event_timestamp,proposal_id,proponent_id`
+  ` event_id,event_schema,event_action,event_timestamp,proposal_id,proponent_id`
 
 ## Casos de exemplo
 
