@@ -32,7 +32,7 @@ escolher e, é claro, de escrever testes.
 * Dever haver no mínimo 1 garantia de imóvel por proposta ✔
 * A soma do valor das garantias deve ser maior ou igual ao dobro do valor do empréstimo ✔
 * As garantias de imóvel dos estados PR, SC e RS não são aceitas ✔
-* A renda do proponente principal deve ser pelo menos:
+* A renda do proponente principal deve ser pelo menos: ✔
   * 4 vezes o valor da parcela do empréstimo, se a idade dele for entre 18 e 24 anos
   * 3 vezes o valor da parcela do empréstimo, se a idade dele for entre 24 e 50 anos
   * 2 vezes o valor da parcela do empréstimo, se a idade dele for acima de 50 anos
