@@ -43,12 +43,27 @@ public class Proposal implements Validable {
       ifProponentAgeLessThanEighteenThrowException();
       ifNumberOfWarrantyIsLowerThanOneThrowException();
       ifWarrantyValueIsLowerThanTwiceLoanValueThrowException();
+      ifWarrantyProvinceIsNotValidThrowException();
     }
     catch(final ProposalInvalidException exception) {
       LOGGER.info(exception.getMessage());
       return false;
     }
     return true;
+  }
+
+  private void ifWarrantyProvinceIsNotValidThrowException() {
+    final var maybeInvalidProvince = this.events.stream()
+      .filter(WarrantyEvent.class::isInstance)
+      .map(WarrantyEvent.class::cast)
+      .map(WarrantyEvent::warrantyProvince)
+      .filter(province -> List.of("SC", "PR", "RS").contains(province))
+      .findAny();
+
+    if(maybeInvalidProvince.isPresent()) {
+      throw new ProposalInvalidException("proposal.invalid-warranty-province");
+    }
+
   }
 
   private void ifWarrantyValueIsLowerThanTwiceLoanValueThrowException() {
