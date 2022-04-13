@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Tag("unit")
 @DisplayName("Proponent age validation test")
-class ProposalProponentAgeValidationTest {
+class ProponentAgeValidationTest {
 
 
   @Test

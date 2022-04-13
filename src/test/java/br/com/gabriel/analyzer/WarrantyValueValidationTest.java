@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Tag("unit")
 @DisplayName("Warranty value validation test")
-class ProposalWarrantyValueValidationTest {
+class WarrantyValueValidationTest {
 
   @Test
   @DisplayName("Should return true when the sum of warranty values is equal than twice of loan value")

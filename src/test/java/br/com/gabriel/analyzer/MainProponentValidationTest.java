@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Tag("unit")
 @DisplayName("Number of main proponent by proposal validation test")
-class ProposalMainProponentValidationTest {
+class MainProponentValidationTest {
 
 
   @Test
