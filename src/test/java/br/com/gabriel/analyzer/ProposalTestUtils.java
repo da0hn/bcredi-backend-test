@@ -46,7 +46,7 @@ public final class ProposalTestUtils {
     150
   );
 
-  private static EventMetadata anEvent(final EventSchema schema, final EventAction action) {
+  public static EventMetadata anEvent(final EventSchema schema, final EventAction action) {
     return new EventMetadata(
       UUID.randomUUID().toString(),
       schema,
