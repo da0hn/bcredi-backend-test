@@ -173,4 +173,8 @@ public class Proposal implements Validable {
       .findFirst()
       .orElseThrow(() -> new ProposalInvalidException("proposal.proposal-event.not-found"));
   }
+
+  public String proposalId() {
+    return this.proposalId;
+  }
 }
