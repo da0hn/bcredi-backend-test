@@ -16,7 +16,7 @@ import static br.com.gabriel.analyzer.domain.ProposalConstants.MAX_YEAR_INSTALLM
 import static br.com.gabriel.analyzer.domain.ProposalConstants.MIN_AGE;
 import static br.com.gabriel.analyzer.domain.ProposalConstants.MIN_LOAN_VALUE;
 import static br.com.gabriel.analyzer.domain.ProposalConstants.MIN_YEAR_INSTALLMENTS;
-import static br.com.gabriel.analyzer.events.EventAction.ADDED;
+import static br.com.gabriel.analyzer.events.EventAction.CREATED;
 
 public class Proposal implements Validable {
 
@@ -169,7 +169,7 @@ public class Proposal implements Validable {
       .filter(ProposalEvent.class::isInstance)
       .map(ProposalEvent.class::cast)
       .filter(proposalEvent -> proposalEvent.proposalId().equals(this.proposalId))
-      .filter(proposalEvent -> proposalEvent.event().action() == ADDED)
+      .filter(proposalEvent -> proposalEvent.event().action() == CREATED)
       .findFirst()
       .orElseThrow(() -> new ProposalInvalidException("proposal.proposal-event.not-found"));
   }
