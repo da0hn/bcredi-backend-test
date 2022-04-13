@@ -2,6 +2,7 @@ package br.com.gabriel.analyzer.domain;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.text.MessageFormat;
 
 public class ProposalInvalidException extends RuntimeException implements Serializable {
 
@@ -12,5 +13,9 @@ public class ProposalInvalidException extends RuntimeException implements Serial
 
   public ProposalInvalidException(final String message) {
     super(message);
+  }
+
+  public ProposalInvalidException(final String message, final Object entity) {
+    super(MessageFormat.format("Cause: {0} | {1}", entity, message));
   }
 }

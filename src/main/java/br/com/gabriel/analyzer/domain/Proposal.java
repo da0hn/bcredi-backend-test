@@ -154,7 +154,7 @@ public class Proposal implements Validable {
   private void ifMonthlyInstallmentsOutOfRangeThrowException() {
     final var proposalEvent = proposalEvent();
     if(proposalEvent.numberOfMonthlyInstallments() < MIN_YEAR_INSTALLMENTS || proposalEvent.numberOfMonthlyInstallments() > MAX_YEAR_INSTALLMENTS) {
-      throw new ProposalInvalidException("proposal.years-installments.out-of-range");
+      throw new ProposalInvalidException("proposal.years-installments.out-of-range", proposalEvent);
     }
   }
 
