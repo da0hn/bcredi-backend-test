@@ -64,6 +64,7 @@ public final class ProposalTestUtils {
     EventStubBuilder addLowerLoanValueInvalidProposalEvent();
     EventStubBuilder addHigherLoanValueInvalidProposalEvent();
     EventStubBuilder addWarrantyEvent(double value, String province);
+    EventStubBuilder addWarrantyEvent(EventMetadata event, String id, double value, String province);
     EventStubBuilder addProponentEvent(
       String name,
       int age,
@@ -108,6 +109,22 @@ public final class ProposalTestUtils {
         anEvent(WARRANTY, ADDED),
         PROPOSAL_ID,
         UUID.randomUUID().toString(),
+        value,
+        province
+      ));
+      return this;
+    }
+
+    @Override public EventStubBuilder addWarrantyEvent(
+      final EventMetadata event,
+      final String id,
+      final double value,
+      final String province
+    ) {
+      this.events.add(new WarrantyEvent(
+        event,
+        PROPOSAL_ID,
+        id,
         value,
         province
       ));
