@@ -6,6 +6,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -62,7 +64,7 @@ public final class Main {
 
       final String output = analyzer.execute(inputLines);
 
-      if(output.equals(outputLines.get(0))) {
+      if(compareOutput(output, outputLines.get(0))) {
         LOGGER.info(MessageFormat.format("Test {0}/{1} - Passed ✔", i + 1, outputFiles.length));
       }
       else {
@@ -70,4 +72,13 @@ public final class Main {
       }
     }
   }
+
+  private static boolean compareOutput(final String generatedOutput, final String outputLines) {
+    final var generatedOutputAsList = Arrays.asList(generatedOutput.split(","));
+
+    final var outputLinesAsList = Arrays.asList(outputLines.split(","));
+
+    return new HashSet<>(outputLinesAsList).containsAll(generatedOutputAsList);
+  }
+
 }
