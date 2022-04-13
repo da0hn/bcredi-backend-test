@@ -85,7 +85,7 @@ public final class ProposalTestUtils {
 
     @Override public EventStubBuilder addProposalEvent(final Double loanValue, final Integer numberOfMonthlyInstallments) {
       this.addEvent(new ProposalEvent(
-        anEvent(PROPOSAL, ADDED),
+        anEvent(PROPOSAL, CREATED),
         PROPOSAL_ID,
         loanValue,
         numberOfMonthlyInstallments
