@@ -17,6 +17,7 @@ import java.util.UUID;
 import java.util.logging.Logger;
 
 import static br.com.gabriel.analyzer.events.EventAction.ADDED;
+import static br.com.gabriel.analyzer.events.EventAction.CREATED;
 import static br.com.gabriel.analyzer.events.EventSchema.PROPONENT;
 import static br.com.gabriel.analyzer.events.EventSchema.PROPOSAL;
 import static br.com.gabriel.analyzer.events.EventSchema.WARRANTY;
@@ -26,20 +27,20 @@ public final class ProposalTestUtils {
   static final String PROPOSAL_ID = "80921e5f-4307-4623-9ddb-5bf826a31dd7";
 
   private static final Event VALID_PROPOSAL_EVENT = new ProposalEvent(
-    anEvent(PROPOSAL, ADDED),
+    anEvent(PROPOSAL, CREATED),
     PROPOSAL_ID,
     1_141_424.0,
     150
   );
 
   private static final Event LOWER_LOAN_VALUE_PROPOSAL_EVENT = new ProposalEvent(
-    anEvent(PROPOSAL, ADDED),
+    anEvent(PROPOSAL, CREATED),
     PROPOSAL_ID,
     29_999.99,
     150
   );
   private static final Event HIGHER_LOAN_VALUE_PROPOSAL_EVENT = new ProposalEvent(
-    anEvent(PROPOSAL, ADDED),
+    anEvent(PROPOSAL, CREATED),
     PROPOSAL_ID,
     3_000_001.0,
     150
