@@ -31,7 +31,9 @@ public class MessageAnalyzer implements Analyzer {
       .map(Proposal::fromEntry)
       .toList();
 
-
-    return "";
+    return proposals.stream()
+      .filter(Proposal::valid)
+      .map(Proposal::proposalId)
+      .collect(Collectors.joining(","));
   }
 }
