@@ -1,10 +1,13 @@
 package br.com.gabriel.analyzer;
 
+import br.com.gabriel.analyzer.events.executors.RemoveWarrantyEventExecutor;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 
 public final class Main {
@@ -46,7 +49,9 @@ public final class Main {
       "./data/output/output012.txt"
     };
 
-    final Analyzer analyzer = new MessageAnalyzer();
+    final Analyzer analyzer = new MessageAnalyzer(Set.of(
+      new RemoveWarrantyEventExecutor()
+    ));
 
     for(int i = 0; i <= outputFiles.length - 1; ++i) {
       final Path inputPath = Paths.get(inputFiles[i]);
