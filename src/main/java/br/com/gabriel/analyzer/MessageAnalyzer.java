@@ -40,6 +40,9 @@ public class MessageAnalyzer implements Analyzer {
       .map(Proposal::fromEntry)
       .toList();
 
+
+    proposals.forEach(proposal -> proposal.applyExternalEvent(this.externalEventExecutors));
+
     return proposals.stream()
       .filter(Proposal::valid)
       .map(Proposal::proposalId)

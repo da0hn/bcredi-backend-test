@@ -4,9 +4,10 @@ import br.com.gabriel.analyzer.events.Event;
 import br.com.gabriel.analyzer.events.ProponentEvent;
 import br.com.gabriel.analyzer.events.ProposalEvent;
 import br.com.gabriel.analyzer.events.WarrantyEvent;
+import br.com.gabriel.analyzer.events.executors.ExternalEventExecutor;
 import br.com.gabriel.analyzer.validators.Validable;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -27,7 +28,7 @@ public class Proposal implements Validable {
 
   public Proposal(final String proposalId, final List<Event> events) {
     this.proposalId = proposalId;
-    this.events = Collections.unmodifiableList(events);
+    this.events = new ArrayList<>(events);
   }
 
   public static Proposal fromEntry(final Map.Entry<String, ? extends List<Event>> entry) {
@@ -176,5 +177,9 @@ public class Proposal implements Validable {
 
   public String proposalId() {
     return this.proposalId;
+  }
+
+  public void applyExternalEvent(final Iterable<ExternalEventExecutor> externalEventExecutors) {
+    externalEventExecutors.forEach(executor -> executor.execute(this.events));
   }
 }
